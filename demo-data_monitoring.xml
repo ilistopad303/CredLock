@@ -1,0 +1,58 @@
+<Sysmon schemaversion="15.15">
+  <HashAlgorithms>SHA256</HashAlgorithms>
+
+  <EventFiltering>
+
+    <!-- ========================= -->
+    <!-- FILE-SCOPED EVENTS ONLY   -->
+    <!-- These can be limited to a directory -->
+    <!-- ========================= -->
+
+    <!-- Event ID 11: FileCreate -->
+    <FileCreate onmatch="include">
+      <TargetFilename condition="begin with">C:\demo-data\</TargetFilename>
+    </FileCreate>
+
+    <!-- Event ID 23: FileDelete -->
+    <FileDelete onmatch="include">
+      <TargetFilename condition="begin with">C:\demo-data\</TargetFilename>
+    </FileDelete>
+
+    <!-- Event ID 2: FileCreateTime (creation time changed / timestomp) -->
+    <FileCreateTime onmatch="include">
+      <TargetFilename condition="begin with">C:\demo-data\</TargetFilename>
+    </FileCreateTime>
+
+    <!-- Event ID 15: FileCreateStreamHash (ADS) -->
+    <FileCreateStreamHash onmatch="include">
+      <TargetFilename condition="begin with">C:\demo-data\</TargetFilename>
+    </FileCreateStreamHash>
+
+    <!-- Event ID 26: FileDeleteDetected (Sysmon may emit this depending on settings/behavior) -->
+    <FileDeleteDetected onmatch="include">
+      <TargetFilename condition="begin with">C:\demo-data\</TargetFilename>
+    </FileDeleteDetected>
+
+    <!-- ========================= -->
+    <!-- OPTIONAL: PROCESS-SCOPED EVENTS -->
+    <!-- These cannot be "in a folder", but we can scope them to processes whose executable is in C:\demo-data\ -->
+    <!-- Enable these if you run your simulator from C:\demo-data\ -->
+    <!-- ========================= -->
+
+    <!-- Event ID 1: ProcessCreate -->
+    <ProcessCreate onmatch="include">
+      <Image condition="begin with">C:\demo-data\</Image>
+    </ProcessCreate>
+
+    <!-- Event ID 3: NetworkConnect -->
+    <NetworkConnect onmatch="include">
+      <Image condition="begin with">C:\demo-data\</Image>
+    </NetworkConnect>
+
+    <!-- Event ID 5: ProcessTerminate -->
+    <ProcessTerminate onmatch="include">
+      <Image condition="begin with">C:\demo-data\</Image>
+    </ProcessTerminate>
+
+  </EventFiltering>
+</Sysmon>
